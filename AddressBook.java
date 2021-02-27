@@ -89,7 +89,7 @@ class Contact{
 	}
 
 	public String toString(){
-		return "Details of: "+ firstName+ " "+lastName+"\n"
+		return "\nDetails of: "+ firstName+ " "+lastName+"\n"
 									+"Address: "+address+"\n"
 									+"City: "+city+"\n"
 									+"State: "+state+"\n"
@@ -104,8 +104,8 @@ public class AddressBook {
 
 	static Scanner sc = new Scanner(System.in);
 	public static String check = "yes";
-			
-	private void addDetails(){
+		
+	private void addContact(){
 		
 		System.out.println("How many Contacts do you want to add?");
 		int noOfContact = sc.nextInt();
@@ -129,11 +129,12 @@ public class AddressBook {
 			String email=sc.next();
 		
 			list.add(new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email));
-			System.out.println("Contact for " + firstName + " is added Successfully!");
+			System.out.println(list.get(i));
+			System.out.println("\nContact for " + firstName + " is added Successfully! \n" );
 		}
 	}
 	
-	public static String editDetails() {
+	public static String editContact() {
 		String name;
 		System.out.println("Enter First Name of Contact to be Edited : ");
 		name = sc.next();
@@ -156,28 +157,45 @@ public class AddressBook {
 			System.out.println("Enter Email");
 			list.get(0).setEmail(sc.next());
 			
-			System.out.println(list.get(0));
-			return "Contact for " + name + " is edited Successfully";
+			System.out.println("\n" + list.get(0));
+			return "\nContact for " + name + " is edited Successfully";
 		}
 		else {
-			return "Invalid Input";
+			return "\nInvalid Input";
 		}
 	}
+	
+	public static String deleteContact(){
+		String name;
+		System.out.println("\nEnter First Name : ");
+		name = sc.next();
+		
+		
+		for(int i=0; i<list.size(); i++) {
+			System.out.println(i);
+			if(name.equals(list.get(i).getFirstName())) {
+				list.remove(i);
+			}
+			
+		}
+		return ("\nContact for " + name + " is deleted sucessfully");
+	}	
 	
 	public static void main(String[] args) {
 		System.out.println("Welcome To Address Book Problem\n");
 		
 		AddressBook user = new AddressBook();
-		user.addDetails();
+		user.addContact();
 		
-		System.out.println("Do you want to edit the Contact ? \nEnter yes or no");
+		System.out.println("\nDo you want to Delete the Contact ? \nEnter yes or no");
 		check = sc.next().toLowerCase();
 		
 		if(check.equals("yes"))
-			System.out.println(editDetails());
+			System.out.println(deleteContact());
 		else
 			System.out.println("Done");
 		
+		System.out.println("\nAfter deletion the contacts available are : ");
 		for(int i=0; i<list.size(); i++)
 			System.out.println(list.get(i)+"\n");
 		
