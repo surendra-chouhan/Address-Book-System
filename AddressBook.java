@@ -139,30 +139,30 @@ public class AddressBook {
 		System.out.println("Enter First Name of Contact to be Edited : ");
 		name = sc.next();
 		
-		if(name.equals(list.get(0).getFirstName())) {
-			System.out.println("Enter FirstName");
-			list.get(0).setFirstName(sc.next());
-			System.out.println("Enter LastName");
-			list.get(0).setLastName(sc.next());
-			System.out.println("Enter Address");
-			list.get(0).setAddress(sc.next());
-			System.out.println("Enter CityName");
-			list.get(0).setCity(sc.next());
-			System.out.println("Enter StateName");
-			list.get(0).setState(sc.next());
-			System.out.println("Enter Zip");
-			list.get(0).setZip(sc.next());
-			System.out.println("Enter PhoneNumber");
-			list.get(0).setPhoneNumber(sc.next());
-			System.out.println("Enter Email");
-			list.get(0).setEmail(sc.next());
+		for(int i=0; i < list.size(); i++) {
+			if(name.equals(list.get(i).getFirstName())) {
+				System.out.println("Enter FirstName");
+				list.get(i).setFirstName(sc.next());
+				System.out.println("Enter LastName");
+				list.get(i).setLastName(sc.next());
+				System.out.println("Enter Address");
+				list.get(i).setAddress(sc.next());
+				System.out.println("Enter CityName");
+				list.get(i).setCity(sc.next());
+				System.out.println("Enter StateName");
+				list.get(i).setState(sc.next());
+				System.out.println("Enter Zip");
+				list.get(i).setZip(sc.next());
+				System.out.println("Enter PhoneNumber");
+				list.get(i).setPhoneNumber(sc.next());
+				System.out.println("Enter Email");
+				list.get(i).setEmail(sc.next());
 			
-			System.out.println("\n" + list.get(0));
-			return "\nContact for " + name + " is edited Successfully";
+				System.out.println("\n" + list.get(i));
+				return "\nContact for " + name + " is edited Successfully";
+			}
 		}
-		else {
-			return "\nInvalid Input";
-		}
+		return "Invalid Input";		
 	}
 	
 	public static String deleteContact(){
@@ -172,13 +172,13 @@ public class AddressBook {
 		
 		
 		for(int i=0; i<list.size(); i++) {
-			System.out.println(i);
 			if(name.equals(list.get(i).getFirstName())) {
 				list.remove(i);
+				return ("\nContact for " + name + " is deleted sucessfully");
 			}
 			
 		}
-		return ("\nContact for " + name + " is deleted sucessfully");
+		return "\n" + name + "is not in Contact list";
 	}	
 	
 	public static void main(String[] args) {
@@ -187,14 +187,31 @@ public class AddressBook {
 		AddressBook user = new AddressBook();
 		user.addContact();
 		
+		System.out.print("\nDo you want to Edit this Contact ? Enter yes or no ");
+		check=sc.next().toLowerCase();
+		
+		if(check.equals("yes")) 
+		{
+			System.out.println(editContact());
+		}
+//		else
+//		{
+//			System.out.println("Done");
+//		}
+		System.out.println("\nAfter editing the contacts available are : ");
+		for(int i=0; i<list.size(); i++)
+		{
+			System.out.println(list.get(i));
+		}
+		
 		System.out.println("\nDo you want to Delete the Contact ? \nEnter yes or no");
 		check = sc.next().toLowerCase();
 		
 		if(check.equals("yes"))
 			System.out.println(deleteContact());
-		else
-			System.out.println("Done");
-		
+//		else
+//			System.out.println("Done");
+//		
 		System.out.println("\nAfter deletion the contacts available are : ");
 		for(int i=0; i<list.size(); i++)
 			System.out.println(list.get(i)+"\n");
