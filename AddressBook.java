@@ -1,4 +1,5 @@
 package addressBook;
+import java.util.Scanner;
 
 class Contact{
 	public final String firstName;
@@ -49,13 +50,42 @@ public class AddressBook {
 		for (int i=0; i<numOfContacts; i++){
 			System.out.println(contact[i]);
 		}
+		System.out.println("Contact added Successfully!");
 	}
 
 	public static void main(String[] args) {
 		System.out.println("Welcome To Address Book Problem\n");
 		
-		AddressBook address = new AddressBook();
-		address.details("Surendra", "Chouhan", "Wadala", "Mumbai", "Maharashtra", "400037", "855811692", "surendra@gmail.com");
-		address.AddDetails();
+		AddressBook user = new AddressBook();
+		user.details("Surendra", "Chouhan", "Wadala", "Mumbai", "Maharashtra", "400037", "855811692", "surendra@gmail.com");
+		user.AddDetails();
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Number Of Contacts to Add");
+		int numOfContact=sc.nextInt();
+		for (int i = 1; i <= numOfContact; i++) 
+		{
+			System.out.println("Enter no. of details of: "+i);
+
+			System.out.println("Enter FirstName");
+			String firstName=sc.next();
+			System.out.println("Enter LastName");
+			String lastName=sc.next();
+			System.out.println("Enter Address");
+			String address=sc.next();
+			System.out.println("Enter City");
+			String city=sc.next();
+			System.out.println("Enter State");
+			String state=sc.next();
+			System.out.println("Enter ZipCode");
+			String zip=sc.next();
+			System.out.println("Enter PhoneNumber");
+			String phoneNumber=sc.next();
+			System.out.println("Enter Email");
+			String email=sc.next();
+		
+			user.details(firstName, lastName, address, city, state, zip, phoneNumber, email);
+			user.AddDetails();
+		}
 	}
 }
