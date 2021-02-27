@@ -1,15 +1,16 @@
 package addressBook;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Contact{
-	public final String firstName;
-	public final String lastName;
-	public final String address;
-	public final String city;
-	public final String state;
-	public final String zip;
-	public final String phoneNumber;
-	public final String email;
+	private String firstName;
+	private String lastName;
+	private String address;
+	private String city;
+	private String state;
+	private String zip;
+	private String phoneNumber;
+	private String email;
 
 	public Contact(String firstName, String lastName, String address, String city , String state, String zip, String phoneNumber, String email){
 		this.firstName = firstName;
@@ -19,6 +20,71 @@ class Contact{
 		this.state = state;
 		this.zip = zip;
 		this.phoneNumber = phoneNumber;
+		this.email = email;
+	}
+
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -34,39 +100,17 @@ class Contact{
 }
 
 public class AddressBook {
-	private int numOfContacts = 0;
-	private Contact[] contact;
+	static ArrayList<Contact> list = new ArrayList<Contact>();
 
-	public AddressBook(){
-		contact = new Contact[3];
-	}
-
-	public void details(String firstName, String lastName, String address, String city , String state, String zip, String phoneNumber1, String email){
-		contact [ numOfContacts ] = new Contact(firstName, lastName, address, city, state, zip, phoneNumber1, email);
-		numOfContacts++;
-	}
-
-	private void AddDetails(){
-		for (int i=0; i<numOfContacts; i++){
-			System.out.println(contact[i]);
-		}
-		System.out.println("Contact added Successfully!");
-	}
-
-	public static void main(String[] args) {
-		System.out.println("Welcome To Address Book Problem\n");
+	static Scanner sc = new Scanner(System.in);
+	public static String check = "yes";
+			
+	private void addDetails(){
 		
-		AddressBook user = new AddressBook();
-		user.details("Surendra", "Chouhan", "Wadala", "Mumbai", "Maharashtra", "400037", "855811692", "surendra@gmail.com");
-		user.AddDetails();
+		System.out.println("How many Contacts do you want to add?");
+		int noOfContact = sc.nextInt();
 		
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Number Of Contacts to Add");
-		int numOfContact=sc.nextInt();
-		for (int i = 1; i <= numOfContact; i++) 
-		{
-			System.out.println("Enter no. of details of: "+i);
-
+		for (int i =0; i < noOfContact; i++) {
 			System.out.println("Enter FirstName");
 			String firstName=sc.next();
 			System.out.println("Enter LastName");
@@ -84,8 +128,58 @@ public class AddressBook {
 			System.out.println("Enter Email");
 			String email=sc.next();
 		
-			user.details(firstName, lastName, address, city, state, zip, phoneNumber, email);
-			user.AddDetails();
+			list.add(new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email));
+			System.out.println("Contact for " + firstName + " is added Successfully!");
 		}
+	}
+	
+	public static String editDetails() {
+		String name;
+		System.out.println("Enter First Name of Contact to be Edited : ");
+		name = sc.next();
+		
+		if(name.equals(list.get(0).getFirstName())) {
+			System.out.println("Enter FirstName");
+			list.get(0).setFirstName(sc.next());
+			System.out.println("Enter LastName");
+			list.get(0).setLastName(sc.next());
+			System.out.println("Enter Address");
+			list.get(0).setAddress(sc.next());
+			System.out.println("Enter CityName");
+			list.get(0).setCity(sc.next());
+			System.out.println("Enter StateName");
+			list.get(0).setState(sc.next());
+			System.out.println("Enter Zip");
+			list.get(0).setZip(sc.next());
+			System.out.println("Enter PhoneNumber");
+			list.get(0).setPhoneNumber(sc.next());
+			System.out.println("Enter Email");
+			list.get(0).setEmail(sc.next());
+			
+			System.out.println(list.get(0));
+			return "Contact for " + name + " is edited Successfully";
+		}
+		else {
+			return "Invalid Input";
+		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Welcome To Address Book Problem\n");
+		
+		AddressBook user = new AddressBook();
+		user.addDetails();
+		
+		System.out.println("Do you want to edit the Contact ? \nEnter yes or no");
+		check = sc.next().toLowerCase();
+		
+		if(check.equals("yes"))
+			System.out.println(editDetails());
+		else
+			System.out.println("Done");
+		
+		for(int i=0; i<list.size(); i++)
+			System.out.println(list.get(i)+"\n");
+		
 	}
 }
