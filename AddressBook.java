@@ -178,7 +178,7 @@ public class AddressBook {
 			}
 			
 		}
-		return "\n" + name + "is not in Contact list";
+		return "\n" + name + " is not in Contact list";
 	}	
 	
 	public static void main(String[] args) {
@@ -194,10 +194,7 @@ public class AddressBook {
 		{
 			System.out.println(editContact());
 		}
-//		else
-//		{
-//			System.out.println("Done");
-//		}
+		
 		System.out.println("\nAfter editing the contacts available are : ");
 		for(int i=0; i<list.size(); i++)
 		{
@@ -209,9 +206,7 @@ public class AddressBook {
 		
 		if(check.equals("yes"))
 			System.out.println(deleteContact());
-//		else
-//			System.out.println("Done");
-//		
+
 		System.out.println("\nAfter deletion the contacts available are : ");
 		for(int i=0; i<list.size(); i++)
 			System.out.println(list.get(i)+"\n");
