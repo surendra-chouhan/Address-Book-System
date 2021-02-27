@@ -1,5 +1,6 @@
 package addressBook;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 class Contact{
@@ -101,10 +102,22 @@ class Contact{
 
 public class AddressBook {
 	static ArrayList<Contact> list = new ArrayList<Contact>();
+	public static AddressBook addressbook = new AddressBook();
+	public static HashMap<String, AddressBook> addressBooks = new HashMap<>();
 
 	static Scanner sc = new Scanner(System.in);
 	public static String check = "yes";
+	
+	public static void addAddressBook() {
+		System.out.println("Enter the name of the new address book : ");
+		String name = sc.nextLine();
 		
+		addressbook = new AddressBook();
+		addressBooks.put(name, addressbook);
+		
+		System.out.println("New Address Book is Added as " + name);
+	}
+	
 	private void addContact(){
 		
 		System.out.println("How many Contacts do you want to add?");
@@ -184,8 +197,9 @@ public class AddressBook {
 	public static void main(String[] args) {
 		System.out.println("Welcome To Address Book Problem\n");
 		
-		AddressBook user = new AddressBook();
-		user.addContact();
+		AddressBook address = new AddressBook();
+		addAddressBook();
+		address.addContact();
 		
 		System.out.print("\nDo you want to Edit this Contact ? Enter yes or no ");
 		check=sc.next().toLowerCase();
@@ -195,7 +209,7 @@ public class AddressBook {
 			System.out.println(editContact());
 		}
 		
-		System.out.println("\nAfter editing the contacts available are : ");
+		System.out.println("\nContacts available are : ");
 		for(int i=0; i<list.size(); i++)
 		{
 			System.out.println(list.get(i));
@@ -207,7 +221,7 @@ public class AddressBook {
 		if(check.equals("yes"))
 			System.out.println(deleteContact());
 
-		System.out.println("\nAfter deletion the contacts available are : ");
+		System.out.println("\nContacts available are : ");
 		for(int i=0; i<list.size(); i++)
 			System.out.println(list.get(i)+"\n");
 		
