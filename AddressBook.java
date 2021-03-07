@@ -3,6 +3,7 @@ package addressBook;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 class Contact{
 	private String firstName;
@@ -109,14 +110,13 @@ class Contact{
 public class AddressBook {
 	static ArrayList<Contact> list = new ArrayList<Contact>();
 	public static AddressBook addressbook = new AddressBook(null);
-//	public static HashMap<String, AddressBook> addressBooks = new HashMap<>();
 	public static Contact contact = new Contact();
 	public static ArrayList<AddressBook> book = new ArrayList<>();
+	public HashMap<String, String> citydict = new HashMap<>();
+	public HashMap<String, String> statedict = new HashMap<>();
 	
 	static Scanner sc = new Scanner(System.in);
-	
-	
-	
+
 	public AddressBook(String str) {
 		// TODO Auto-generated constructor stub
 	}
@@ -129,11 +129,11 @@ public class AddressBook {
 	
 	public void DefaultContact()
 	{
-		book.get(0).list.add(new Contact("omkar", "mali", "palaspe", "mumbai", "maharastra", "4000129", "90290642", "omkar@gmail.com"));
-		book.get(0).list.add(new Contact("sumit", "wagh", "tilaknagar", "mumbai", "maharastra", "400089", "816979161", "sumit@gmail.com"));
-		book.get(1).list.add(new Contact("surendra", "chouhan", "wadala", "mumbai", "maharastra", "4000012", "8181818818", "surendra@gmail.com"));
-		book.get(1).list.add(new Contact("nikhil", "tiwari", "wadala", "thane", "maharastra", "4000012", "1121221", "nikhil@gmail.com"));
-		book.get(2).list.add(new Contact("gaurav", "purao", "kohinoor", "thane", "maharastra", "4040091", "82828882", "gaurav@gmail.com"));
+		book.get(0).list.add(new Contact("omkar", "mali", "palaspe", "mumbai", "maharashtra", "4000129", "90290642", "omkar@gmail.com"));
+		book.get(0).list.add(new Contact("sumit", "wagh", "tilaknagar", "mumbai", "maharashtra", "400089", "816979161", "sumit@gmail.com"));
+		book.get(1).list.add(new Contact("surendra", "chouhan", "wadala", "mumbai", "maharashtra", "4000012", "8181818818", "surendra@gmail.com"));
+		book.get(1).list.add(new Contact("nikhil", "tiwari", "wadala", "thane", "maharashtra", "4000012", "1121221", "nikhil@gmail.com"));
+		book.get(2).list.add(new Contact("gaurav", "purao", "kohinoor", "thane", "maharashtra", "4040091", "82828882", "gaurav@gmail.com"));
 		for(int i=0;i<book.size();i++)
 		{
 			System.out.println(list.get(i));
@@ -174,11 +174,47 @@ public class AddressBook {
 		}
 	}
 	
+	public void PersonCityDictionary() {
+		for(AddressBook address : book) {
+			for(Contact contact : address.list) {
+				String name = contact.getFirstName();
+				citydict.put(name, contact.getCity());
+			}
+		}
+		System.out.println("Enter the city name to search for contacts: ");
+		String city=sc.next();
+		for(Entry<String, String> entry:citydict.entrySet())
+		{
+			if(city.equals(entry.getValue()))
+			{
+				System.out.println("Person from "+entry.getValue()+" city are: "+entry.getKey());
+			}
+		}
+	}
+	
+	public void PersonStateDictionary()
+	{
+		for(AddressBook address: book)
+		{
+			for(Contact contact:address.list)
+			{
+				String name=contact.getFirstName();
+				statedict.put(name, contact.getState());
+			}
+		}
+		System.out.println("Enter the State name to search for contacts: ");
+		String state=sc.next();
+		for(Entry<String, String> entry:statedict.entrySet())
+		{
+			if(state.equals(entry.getValue()))
+			{
+				System.out.println("Person from "+entry.getValue()+"State is: "+entry.getKey());
+			}
+		}
+	}
+	
 	private void addContact(){
 		list.add(0,new Contact("surendra", "chouhan", "wadala", "mumbai", "maharashtra", "400037", "9987451480", "chouhansurendra88@gmail.com"));
-//		System.out.println("\nContacts already available are : ");
-//		for(int i=0; i<list.size(); i++)
-//			System.out.println(list.get(i)+"\n");
 		
 		System.out.println("\nHow many Contacts do you want to add?");
 		int noOfContact = sc.nextInt();
@@ -272,39 +308,39 @@ public class AddressBook {
 		int check=0;
 		
 		while(check != 8) {
-		System.out.println("\n1. Add Address Book \n2. Add Contact \n3. View Available Contacts \n4. Edit Contact \n5. Delete Contact \n6. Search Person With City \n7. Search Person With State \n8. Exit" );
-		check = sc.nextInt();
-		switch(check) {
-			case 1:
-				address.addAddressBook();
-				break;
-			case 2:
-				address.addContact();
-				break;
-			case 3:
-				System.out.println("\nContacts available are : ");
-				for(int i=0; i<list.size(); i++)
-					System.out.println(list.get(i)+"\n");
-				break;
-			case 4:
-				editContact();
-				for(int i=0; i<list.size(); i++)
-					System.out.println(list.get(i));
-				break;
-			case 5:
-				deleteContact();
-				for(int i=0; i<list.size(); i++)
-					System.out.println(list.get(i));
-				break;
-			case 6:
-				address.SearchPersonWithCity();
-				break;
-			case 7:
-				address.SearchPersonWithState();
-				break;
-			case 8:
-				System.out.println("Thanks");
-		}
+			System.out.println("\n1. Add Address Book \n2. Add Contact \n3. View Available Contacts \n4. Edit Contact \n5. Delete Contact \n6. Search Person With City \n7. Search Person With State \n8. Exit" );
+			check = sc.nextInt();
+			switch(check) {
+				case 1:
+					address.addAddressBook();
+					break;
+				case 2:
+					address.addContact();
+					break;
+				case 3:
+					System.out.println("\nContacts available are : ");
+					for(int i=0; i<list.size(); i++)
+						System.out.println(list.get(i)+"\n");
+					break;
+				case 4:
+					editContact();
+					for(int i=0; i<list.size(); i++)
+						System.out.println(list.get(i));
+					break;
+				case 5:
+					deleteContact();
+					for(int i=0; i<list.size(); i++)
+						System.out.println(list.get(i));
+					break;
+				case 6:
+					address.PersonCityDictionary();
+					break;
+				case 7:
+					address.PersonStateDictionary();
+					break;
+				case 8:
+					System.out.println("Thanks");
+			}
 		}
 	}
 }
