@@ -4,13 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-class ContactAlreadyExistsException extends Exception{
-	public ContactAlreadyExistsException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
-}
-
 class Contact{
 	private String firstName;
 	private String lastName;
@@ -115,27 +108,77 @@ class Contact{
 
 public class AddressBook {
 	static ArrayList<Contact> list = new ArrayList<Contact>();
-	public static AddressBook addressbook = new AddressBook();
-	public static HashMap<String, AddressBook> addressBooks = new HashMap<>();
+	public static AddressBook addressbook = new AddressBook(null);
+//	public static HashMap<String, AddressBook> addressBooks = new HashMap<>();
 	public static Contact contact = new Contact();
+	public static ArrayList<AddressBook> book = new ArrayList<>();
 	
 	static Scanner sc = new Scanner(System.in);
+	
+	
+	
+	public AddressBook(String str) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void defaultBook() {
+        book.add(new AddressBook("default address book"));
+        book.add(new AddressBook("Address Book 1"));
+        book.add(new AddressBook("Address Book 2"));
+	}
+	
+	public void DefaultContact()
+	{
+		book.get(0).list.add(new Contact("omkar", "mali", "palaspe", "mumbai", "maharastra", "4000129", "90290642", "omkar@gmail.com"));
+		book.get(0).list.add(new Contact("sumit", "wagh", "tilaknagar", "mumbai", "maharastra", "400089", "816979161", "sumit@gmail.com"));
+		book.get(1).list.add(new Contact("surendra", "chouhan", "wadala", "mumbai", "maharastra", "4000012", "8181818818", "surendra@gmail.com"));
+		book.get(1).list.add(new Contact("nikhil", "tiwari", "wadala", "thane", "maharastra", "4000012", "1121221", "nikhil@gmail.com"));
+		book.get(2).list.add(new Contact("gaurav", "purao", "kohinoor", "thane", "maharastra", "4040091", "82828882", "gaurav@gmail.com"));
+		for(int i=0;i<book.size();i++)
+		{
+			System.out.println(list.get(i));
+		}
+	}
 	
 	private void addAddressBook(){
 		System.out.println("Enter the name of the new address book : ");
 		String name = sc.next();
-		
-		addressbook = new AddressBook();
-		addressBooks.put(name, addressbook);
+		book.add(new AddressBook(name));
 		
 		System.out.println("New Address Book is Added as " + name);
 	}
 	
+	public void SearchPersonWithCity()
+	{
+		System.out.println("Enter city for the contact info: ");
+		String city=sc.next();
+		for(int i=0; i<list.size(); i++)
+		{
+			if(city.equals(list.get(i).getCity()))
+			{
+				System.out.println(list.get(i));
+			}
+		}
+	}
+	
+	public void SearchPersonWithState()
+	{
+		System.out.println("Enter state for the contact info: ");
+		String state=sc.next();
+		for(int i=0;i<list.size();i++)
+		{
+			if(state.equals(list.get(i).getState()))
+			{
+				System.out.println(list.get(i));
+			}
+		}
+	}
+	
 	private void addContact(){
 		list.add(0,new Contact("surendra", "chouhan", "wadala", "mumbai", "maharashtra", "400037", "9987451480", "chouhansurendra88@gmail.com"));
-		System.out.println("\nContacts already available are : ");
-		for(int i=0; i<list.size(); i++)
-			System.out.println(list.get(i)+"\n");
+//		System.out.println("\nContacts already available are : ");
+//		for(int i=0; i<list.size(); i++)
+//			System.out.println(list.get(i)+"\n");
 		
 		System.out.println("\nHow many Contacts do you want to add?");
 		int noOfContact = sc.nextInt();
@@ -222,12 +265,14 @@ public class AddressBook {
 	public static void main(String[] args) {
 		System.out.println("Welcome To Address Book Problem\n");
 		
-		AddressBook address = new AddressBook();
-		address.addContact();	
+		AddressBook address = new AddressBook(null);
+		address.defaultBook();
+		address.DefaultContact();
+			
 		int check=0;
 		
-		while(check != 6) {
-		System.out.println("\n1. Add Address Book \n2. Add Contact \n3. View Available Contacts \n4. Edit Contact \n5. Delete Contact \n6. Exit" );
+		while(check != 8) {
+		System.out.println("\n1. Add Address Book \n2. Add Contact \n3. View Available Contacts \n4. Edit Contact \n5. Delete Contact \n6. Search Person With City \n7. Search Person With State \n8. Exit" );
 		check = sc.nextInt();
 		switch(check) {
 			case 1:
@@ -252,6 +297,12 @@ public class AddressBook {
 					System.out.println(list.get(i));
 				break;
 			case 6:
+				address.SearchPersonWithCity();
+				break;
+			case 7:
+				address.SearchPersonWithState();
+				break;
+			case 8:
 				System.out.println("Thanks");
 		}
 		}
