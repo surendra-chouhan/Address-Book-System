@@ -181,15 +181,19 @@ public class AddressBook {
 				citydict.put(name, contact.getCity());
 			}
 		}
+		
 		System.out.println("Enter the city name to search for contacts: ");
 		String city=sc.next();
+		int count = 0;
 		for(Entry<String, String> entry:citydict.entrySet())
 		{
 			if(city.equals(entry.getValue()))
 			{
 				System.out.println("Person from "+entry.getValue()+" city are: "+entry.getKey());
+				count+=1;
 			}
 		}
+		System.out.println("Count of contacts in " + city + " is : " + count);
 	}
 	
 	public void PersonStateDictionary()
@@ -204,13 +208,16 @@ public class AddressBook {
 		}
 		System.out.println("Enter the State name to search for contacts: ");
 		String state=sc.next();
+		int count = 0;
 		for(Entry<String, String> entry:statedict.entrySet())
 		{
 			if(state.equals(entry.getValue()))
 			{
 				System.out.println("Person from "+entry.getValue()+"State is: "+entry.getKey());
+				count += 1;
 			}
 		}
+		System.out.println("Count of contacts in " + state + " is : " + count);
 	}
 	
 	private void addContact(){
@@ -340,6 +347,9 @@ public class AddressBook {
 					break;
 				case 8:
 					System.out.println("Thanks");
+					break;
+				default:
+					System.out.println("Invalid Input");
 			}
 		}
 	}
