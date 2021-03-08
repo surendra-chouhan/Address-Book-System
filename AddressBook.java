@@ -146,11 +146,10 @@ public class AddressBook
         book.add(new AddressBook("Address Book 2"));
     }
 	
-	public void defaultContact()
-	{
-		book.get(0).list.add(new Contact("omkar", "mali", "palaspe", "mumbai", "maharastra", "4000129", "90290642", "omkar@gmail.com"));
-		book.get(0).list.add(new Contact("sumit", "wagh", "tilaknagar", "mumbai", "maharastra", "400089", "816979161", "sumit@gmail.com"));
-		book.get(1).list.add(new Contact("surendra", "chouhan", "wadala", "mumbai", "rajastan", "4000012", "8181818818", "surendra@gmail.com"));
+	public void defaultContact(){
+		book.get(0).list.add(new Contact("omkar", "mali", "palaspe", "mumbai", "maharashtra", "4000129", "90290642", "omkar@gmail.com"));
+		book.get(0).list.add(new Contact("sumit", "wagh", "tilaknagar", "mumbai", "maharashtra", "400089", "816979161", "sumit@gmail.com"));
+		book.get(1).list.add(new Contact("surendra", "chouhan", "wadala", "jodhpur", "rajastan", "4000012", "8181818818", "surendra@gmail.com"));
 		book.get(1).list.add(new Contact("nikhil", "tiwari", "wadala", "thane", "bihar", "4000012", "1121221", "nikhil@gmail.com"));
 		book.get(2).list.add(new Contact("gaurav", "purao", "kohinoor", "thane", "tamilnadu", "4040091", "82828882", "gaurav@gmail.com"));
 	}
@@ -162,8 +161,7 @@ public class AddressBook
         book.add(new AddressBook(str));
     }
     
-	public void searchPersonByCity()
-	{
+	public void searchPersonByCity() {
 		System.out.println("Enter city for the contact info: ");
 		String city=sc.next();
 		for(int i=0;i<list.size();i++) {
@@ -252,10 +250,18 @@ public class AddressBook
 				System.out.println("You have already entered this contact");
 				break;
 			}
-		}	
-		
-		Comparator<Contact> list1 = Comparator.comparing(Contact::getFirstName);
-		System.out.println("\n After Sorting the contact details are: \n");		
+		}		
+	}
+	
+	public void sortByCity() {
+		Comparator<Contact> list1 = Comparator.comparing(Contact::getCity);
+		System.out.println("\n After Sorting the contact details by city : \n");		
+		list.stream().sorted(list1).forEach(System.out::println);
+	}
+	
+	public void sortByState() {
+		Comparator<Contact> list1 = Comparator.comparing(Contact::getState);
+		System.out.println("\n After Sorting the contact details by State : \n");		
 		list.stream().sorted(list1).forEach(System.out::println);
 	}
 	
@@ -264,7 +270,6 @@ public class AddressBook
 		System.out.println("\n After Sorting the contact details are: \n");		
 		list.stream().sorted(list1).forEach(System.out::println);
 	}
-	
 	
 	public static String editDetails() {
 		String name;
@@ -318,6 +323,9 @@ public class AddressBook
 		address.defaultBook();
 		address.defaultContact();
 		int check = 0;
+		
+		address.sortByCity();
+		address.sortByState();
 		
 		while(check != 10) {
 			System.out.print("\n1.Add AddressBook \n2.Add Contact \n3.Display Contact \n4.Delete \n5.Edit"
