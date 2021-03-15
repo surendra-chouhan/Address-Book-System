@@ -128,7 +128,7 @@ public class AddressBook
 {
 	static ArrayList<Contact> list = new ArrayList<Contact>();
 	public static AddressBook addressBook = new AddressBook(null);
-    public static Contact contact=new Contact();
+	public static Contact contact=new Contact();
 
 	static Scanner sc = new Scanner(System.in);
 	public static ArrayList<AddressBook> book = new ArrayList<>();
@@ -144,7 +144,7 @@ public class AddressBook
         book.add(new AddressBook("default address book"));
         book.add(new AddressBook("Address Book 1"));
         book.add(new AddressBook("Address Book 2"));
-    }
+	}
 	
 	public void defaultContact(){
 		book.get(0).list.add(new Contact("omkar", "mali", "palaspe", "mumbai", "maharashtra", "4000129", "90290642", "omkar@gmail.com"));
@@ -154,69 +154,52 @@ public class AddressBook
 		book.get(2).list.add(new Contact("gaurav", "purao", "kohinoor", "thane", "tamilnadu", "4040091", "82828882", "gaurav@gmail.com"));
 	}
 	
-
-    public static void addAddressBook() {
+	public static void addAddressBook() {
         System.out.print("Enter name of new Address Book: ");
         String str=sc.next();
         book.add(new AddressBook(str));
-    }
+	}
     
 	public void searchPersonByCity() {
 		System.out.println("Enter city for the contact info: ");
 		String city=sc.next();
-		for(int i=0;i<list.size();i++) {
-			if(city.equals(list.get(i).getCity())) {
-				System.out.println(list.get(i));
-			}
-		}
+
+		System.out.println("\nContact details of Person in " + city + " city are : \n");		
+		list.stream().filter(contact -> contact.getCity().equals(city)).forEach(System.out::println);
 	}
 	
 	public void searchPersonByState() {
 		System.out.println("Enter state for the contact info: ");
 		String state=sc.next();
-		for(int i=0;i<list.size();i++) {
-			if(state.equals(list.get(i).getState())) {
-				System.out.println(list.get(i));
-			}
-		}
+		
+		System.out.println("\nContact details of Person in " + state + " state are : \n");		
+		list.stream().filter(contact -> contact.getState().equals(state)).forEach(System.out::println);
 	}
 	
-	public void personCityDictionary() {
-		for(AddressBook address : book) {
-			for(Contact contact : address.list) {
-				String name=contact.getFirstName();
-				citydict.put(name, contact.getCity());
-			}
-		}
-		System.out.println("Enter the city name to search for contacts: ");
+	public void personCityDictionary() {	
+		System.out.println("Enter City Name");
 		String city=sc.next();
-		int count = 0;
-		for(Entry<String, String> entry : citydict.entrySet()) {
-			if(city.equals(entry.getValue())) {
-				System.out.println("Person from "+entry.getValue()+" city are: "+entry.getKey());
-				count+=1;
-			}
-		}
-		System.out.println("Count of contacts in " + city + " city is: " + count);
+
+		book.forEach(address -> address.list.stream()
+					.filter(contact -> contact.getCity().equals(city))
+                    .forEach(contact -> citydict.put((contact.getFirstName()), contact.getCity())));
+
+		citydict.forEach((key, value) -> System.out.println(key));
+	
+		System.out.println("Count is : " + citydict.size());
 	}
 	
 	public void personStateDictionary() {
-		for(AddressBook address : book) {
-			for(Contact contact : address.list) {
-				String name = contact.getFirstName();
-				statedict.put(name, contact.getState());
-			}
-		}
-		System.out.println("Enter the state name to search for contacts: ");
+		System.out.println("Enter State Name");
 		String state=sc.next();
-		int count = 0;
-		for(Entry<String, String> entry:statedict.entrySet()) {
-			if(state.equals(entry.getValue())) {
-				System.out.println("Person from " + entry.getValue() + " State is: " + entry.getKey());
-				count+=1;
-			}
-		}
-		System.out.println("Count of contacts in " + state + " state is: " + count);
+
+		book.forEach(address -> address.list.stream()
+                    .filter(contact -> contact.getState().equals(state))
+                    .forEach(contact -> statedict.put((contact.getFirstName()), contact.getCity())));
+
+		statedict.forEach((key, value) -> System.out.println(key));
+		
+		System.out.println("Count is : " + statedict.size());
 	}
 	
 	private void addDetails() {
@@ -323,14 +306,11 @@ public class AddressBook
 		address.defaultBook();
 		address.defaultContact();
 		int check = 0;
-		
-		address.sortByCity();
-		address.sortByState();
-		
-		while(check != 10) {
+				
+		while(check != 12) {
 			System.out.print("\n1.Add AddressBook \n2.Add Contact \n3.Display Contact \n4.Delete \n5.Edit"
 					+ "\n6.Search for contacts based on city \n7.Search for contacts based on state"
-					+ "\n8.To see name of a person based on city \n9.To see name of a person based on state \n10.Exit\n");
+					+ "\n8.To see name of a person based on city \n9.To see name of a person based on state \n10. Sort_By_City \n11.Sort_By_State \n12.Exit\n");
 			check=sc.nextInt();
 			
 			switch(check) {
@@ -369,6 +349,12 @@ public class AddressBook
 					address.personStateDictionary();
 					break;
 				case 10:
+					address.sortByCity();
+					break;
+				case 11: 
+					address.sortByState();
+					break;
+				case 12:
 					System.out.println("Thank you!!!");
 					break;
 				default:
