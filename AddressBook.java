@@ -1,5 +1,9 @@
 package addressBook;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -136,6 +140,8 @@ public class AddressBook
 	public HashMap<String,String> statedict=new HashMap<>();
 	public int count=0;
 	
+	public Path path = Paths.get("D:\\eclipse workspace\\AddressBook\\src\\addressbook.txt");
+	
 	public AddressBook(String str) {
 	
 	}
@@ -202,7 +208,7 @@ public class AddressBook
 		System.out.println("Count is : " + statedict.size());
 	}
 	
-	private void addDetails() {
+	private void addDetails() throws IOException{
 		System.out.println("How many contacts do you want to enter? ");
 		int num=sc.nextInt();
 		list.add(0,new Contact("omkar", "mali", "palaspe", "panvel", "maharastra", "4000129", "90290642", "omkar@gmail.com"));
@@ -233,7 +239,22 @@ public class AddressBook
 				System.out.println("You have already entered this contact");
 				break;
 			}
-		}		
+		}
+		
+		Comparator<Contact> list1 = Comparator.comparing(Contact::getFirstName);
+		System.out.println("\nAfter Sorting the contact details are : ");
+		list.stream().sorted(list1).forEach(System.out::println);
+	}
+	
+	public void writeData() throws IOException {
+		StringBuffer buffer = new StringBuffer();
+		
+		for(int i=0; i<list.size(); i++) 
+			Files.write(path, list.toString().getBytes());
+	}
+	
+	public void readData() throws IOException {
+		Files.lines(path).forEach(System.out::println);
 	}
 	
 	public void sortByCity() {
@@ -318,11 +339,24 @@ public class AddressBook
 					addAddressBook();
 					break;
 				case 2:
-					address.addDetails();
-					//address.sortEnteries();
+					try {
+						address.addDetails();
+						address.writeData();
+						address.readData();
+					} 
+					catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;
 				case 3:
-					address.displayDetails();
+					try {
+						address.readData();
+					}
+					catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;
 				case  4:
 					deleteContacts();
